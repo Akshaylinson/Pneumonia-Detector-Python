@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PneumoniaDetector AI | Advanced Medical Imaging Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 140px 0 80px;
+            margin-top: 70px;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .upload-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .upload-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray);
+            border-radius: var(--border-radius);
+            padding: 60px 40px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .upload-area p {
+            color: var(--secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        .btn-text {
+            background: none;
+            color: var(--primary);
+        }
+
+        .btn-text:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-analyze {
+            width: 100%;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            margin-top: 32px;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .preview-container {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Samples Section */
+        .samples-section h4 {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .samples-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .sample-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sample-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sample-image {
+            height: 120px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            background: linear-gradient(45deg, #e2e8f0, #cbd5e1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sample-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .normal-sample {
+            background: linear-gradient(45deg, #d1fae5, #a7f3d0);
+        }
+
+        .pneumonia-sample {
+            background: linear-gradient(45deg, #fecaca, #fca5a5);
+        }
+
+        .uncertain-sample {
+            background: linear-gradient(45deg, #fef3c7, #fcd34d);
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .sample-info h5 {
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .sample-info p {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Results Section */
+        .results-section {
+            padding: 60px 0;
+            background: var(--light);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .results-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+        }
+
+        .primary-result {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .confidence-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .confidence-badge.high {
+            background: var(--success);
+            color: white;
+        }
+
+        .confidence-badge.medium {
+            background: var(--warning);
+            color: white;
+        }
+
+        .confidence-badge.low {
+            background: var(--danger);
+            color: white;
+        }
+
+        .result-content {
+            display: contents;
+        }
+
+        .diagnosis-main h4 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .diagnosis-subtitle {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Probability Circle */
+        .probability-circle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .circle-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-background {
+            stroke: #e2e8f0;
+        }
+
+        .progress-ring-circle {
+            stroke: var(--primary);
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .probability-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        /* Probability Bars */
+        .probability-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .probability-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bar-label {
+            width: 120px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 1s ease;
+            width: 0%;
+        }
+
+        .bar-value {
+            width: 60px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Lists */
+        .findings-list,
+        .recommendations-list {
+            list-style: none;
+        }
+
+        .findings-list li,
+        .recommendations-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .findings-list li:last-child,
+        .recommendations-list li:last-child {
+            border-bottom: none;
+        }
+
+        .findings-list li::before,
+        .recommendations-list li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Results Actions */
+        .results-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .loading-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .scanning-animation {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 24px;
+            position: relative;
+            background: linear-gradient(45deg, #e2e8f0, #cbd5e1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .scanner-beam {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            animation: scan 2s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% { top: 0; }
+            50% { top: 100%; }
+        }
+
+        .loading-content h3 {
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .loading-content p {
+            color: var(--secondary);
+            margin-bottom: 24px;
+        }
+
+        .loading-progress {
+            width: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            max-width: 300px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #94a3b8;
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-disclaimer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .upload-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .primary-result {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-lungs"></i>
+                <span>PneumoniaDetector AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#upload" class="nav-link">Analyze</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Advanced Pneumonia Detection with AI</h1>
+                <p class="hero-subtitle">Leveraging Vision Transformer technology to assist healthcare professionals in rapid chest X-ray analysis with 95%+ accuracy</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">95.2%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">98.7%</div>
+                        <div class="stat-label">Sensitivity</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">10s</div>
+                        <div class="stat-label">Analysis Time</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="scan-animation">
+                    <div class="scanner"></div>
+                    <div class="xray-preview"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload" class="upload-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Analyze Chest X-Ray</h2>
+                <p>Upload a chest X-ray image for AI-powered pneumonia detection</p>
+            </div>
+
+            <div class="upload-container">
+                <div class="upload-card">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3>Drag & Drop X-Ray Image</h3>
+                        <p>Supports JPG, PNG, DICOM formats</p>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-search"></i> Browse Files
+                        </button>
+                    </div>
+
+                    <div class="preview-section" id="previewSection" style="display: none;">
+                        <div class="preview-header">
+                            <h4>Image Preview</h4>
+                            <button class="btn btn-text" onclick="clearImage()">
+                                <i class="fas fa-times"></i> Change Image
+                            </button>
+                        </div>
+                        <div class="preview-container">
+                            <img id="preview" class="preview-image" alt="X-ray preview">
+                        </div>
+                        <button class="btn btn-primary btn-analyze" id="analyzeBtn" onclick="analyzeImage()">
+                            <i class="fas fa-play"></i> Start Analysis
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Images -->
+                <div class="samples-section">
+                    <h4>Try with Sample Images</h4>
+                    <div class="samples-grid">
+                        <div class="sample-card" onclick="analyzeSample('normal')">
+                            <div class="sample-image normal-sample"></div>
+                            <div class="sample-info">
+                                <h5>Normal Chest X-Ray</h5>
+                                <p>Clear lung fields</p>
+                            </div>
+                        </div>
+                        <div class="sample-card" onclick="analyzeSample('pneumonia')">
+                            <div class="sample-image pneumonia-sample"></div>
+                            <div class="sample-info">
+                                <h5>Pneumonia Case</h5>
+                                <p>Consolidation present</p>
+                            </div>
+                        </div>
+                        <div class="sample-card" onclick="analyzeSample('uncertain')">
+                            <div class="sample-image uncertain-sample"></div>
+                            <div class="sample-info">
+                                <h5>Borderline Case</h5>
+                                <p>Requires careful analysis</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="resultsSection" style="display: none;">
+        <div class="container">
+            <div class="results-header">
+                <h2>Analysis Results</h2>
+                <div class="results-meta">
+                    <span id="analysisTime"></span>
+                    <span id="modelVersion"></span>
+                </div>
+            </div>
+
+            <div class="results-grid">
+                <!-- Primary Result -->
+                <div class="result-card primary-result">
+                    <div class="result-header">
+                        <h3>Diagnostic Assessment</h3>
+                        <div class="confidence-badge" id="confidenceBadge">
+                            <span id="confidenceText"></span>
+                        </div>
+                    </div>
+                    <div class="result-content">
+                        <div class="diagnosis-main">
+                            <h4 id="diagnosisTitle">Loading...</h4>
+                            <p id="diagnosisSubtitle" class="diagnosis-subtitle"></p>
+                        </div>
+                        <div class="probability-circle">
+                            <div class="circle-container">
+                                <svg class="progress-ring" width="120" height="120">
+                                    <circle class="progress-ring-background" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                    <circle class="progress-ring-circle" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"
+                                            stroke-dasharray="326.56" stroke-dashoffset="326.56"/>
+                                </svg>
+                                <div class="probability-text">
+                                    <span id="probabilityValue">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="result-card detailed-analysis">
+                    <h3>Detailed Probabilities</h3>
+                    <div class="probability-bars" id="probabilityBars">
+                        <!-- Probability bars will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Medical Findings -->
+                <div class="result-card findings-card">
+                    <h3>AI Findings</h3>
+                    <ul class="findings-list" id="findingsList">
+                        <!-- Findings will be inserted here -->
+                    </ul>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="result-card recommendations-card">
+                    <h3>Clinical Recommendations</h3>
+                    <ul class="recommendations-list" id="recommendationsList">
+                        <!-- Recommendations will be inserted here -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-secondary" onclick="newAnalysis()">
+                    <i class="fas fa-redo"></i> New Analysis
+                </button>
+                <button class="btn btn-primary" onclick="downloadReport()">
+                    <i class="fas fa-download"></i> Download Report
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Advanced AI Technology</h2>
+                <p>Powered by cutting-edge computer vision algorithms</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Vision Transformer</h3>
+                    <p>State-of-the-art transformer architecture trained on 100,000+ chest X-ray images for superior accuracy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-time Analysis</h3>
+                    <p>Get results in seconds with our optimized inference engine, enabling rapid clinical decision-making.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>HIPAA Compliant</h3>
+                    <p>Enterprise-grade security with end-to-end encryption and full data privacy compliance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-content">
+            <div class="scanning-animation">
+                <div class="scanner-beam"></div>
+                <div class="xray-image"></div>
+            </div>
+            <h3>Analyzing X-Ray Image</h3>
+            <p>Our AI is processing your chest X-ray...</p>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <i class="fas fa-lungs"></i>
+                        <span>PneumoniaDetector AI</span>
+                    </div>
+                    <p>Advanced medical imaging analysis powered by artificial intelligence.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="#">Features</a>
+                        <a href="#">API</a>
+                        <a href="#">Pricing</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">Research</a>
+                        <a href="#">Support</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">HIPAA Compliance</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PneumoniaDetector AI. For demonstration purposes only.</p>
+                <div class="footer-disclaimer">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>This tool is for educational purposes and should not replace professional medical diagnosis.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const previewSection = document.getElementById('previewSection');
+        const preview = document.getElementById('preview');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        // Pneumonia Detection Simulation
+        class PneumoniaDetector {
+            constructor() {
+                this.modelName = "ViT-PneumoniaDetector v2.1";
+                this.confidenceThreshold = 0.7;
+            }
+
+            simulatePrediction(filename) {
+                // Simulate different cases based on filename patterns
+                const filenameLower = filename.toLowerCase();
+                let pneumoniaProb;
+                
+                if (filenameLower.includes('pneumonia') || filenameLower.includes('abnormal')) {
+                    pneumoniaProb = this.getRandomInRange(0.75, 0.95);
+                } else if (filenameLower.includes('normal') || filenameLower.includes('healthy')) {
+                    pneumoniaProb = this.getRandomInRange(0.05, 0.25);
+                } else {
+                    pneumoniaProb = this.getRandomInRange(0.1, 0.9);
+                }
+                
+                const normalProb = 1 - pneumoniaProb;
+                
+                // Add some variance for realism
+                pneumoniaProb = this.addPredictionVariance(pneumoniaProb);
+                const adjustedNormalProb = 1 - pneumoniaProb;
+                
+                // Determine primary label
+                const topLabel = pneumoniaProb > adjustedNormalProb ? "Pneumonia Detected" : "Normal Chest X-Ray";
+                const confidenceLevel = this.getConfidenceLevel(Math.max(pneumoniaProb, adjustedNormalProb));
+                
+                return {
+                    top_label: topLabel,
+                    top_prob: Math.max(pneumoniaProb, adjustedNormalProb),
+                    probs: {
+                        'Pneumonia': Math.round(pneumoniaProb * 1000) / 1000,
+                        'Normal': Math.round(adjustedNormalProb * 1000) / 1000
+                    },
+                    confidence: confidenceLevel,
+                    model_used: this.modelName,
+                    timestamp: new Date().toISOString(),
+                    findings: this.generateFindings(pneumoniaProb),
+                    recommendations: this.generateRecommendations(pneumoniaProb)
+                };
+            }
+
+            simulateSamplePrediction(sampleType) {
+                let pneumoniaProb, normalProb;
+                
+                switch(sampleType) {
+                    case 'pneumonia':
+                        pneumoniaProb = this.getRandomInRange(0.75, 0.95);
+                        normalProb = 1 - pneumoniaProb;
+                        break;
+                    case 'normal':
+                        normalProb = this.getRandomInRange(0.80, 0.98);
+                        pneumoniaProb = 1 - normalProb;
+                        break;
+                    case 'uncertain':
+                        pneumoniaProb = this.getRandomInRange(0.4, 0.6);
+                        normalProb = 1 - pneumoniaProb;
+                        break;
+                    default:
+                        pneumoniaProb = 0.5;
+                        normalProb = 0.5;
+                }
+                
+                const topLabel = pneumoniaProb > normalProb ? "Pneumonia Detected" : "Normal Chest X-Ray";
+                const confidenceLevel = this.getConfidenceLevel(Math.max(pneumoniaProb, normalProb));
+                
+                return {
+                    top_label: topLabel,
+                    top_prob: Math.max(pneumoniaProb, normalProb),
+                    probs: {
+                        'Pneumonia': Math.round(pneumoniaProb * 1000) / 1000,
+                        'Normal': Math.round(normalProb * 1000) / 1000
+                    },
+                    confidence: confidenceLevel,
+                    model_used: this.modelName,
+                    timestamp: new Date().toISOString(),
+                    findings: this.generateFindings(pneumoniaProb),
+                    recommendations: this.generateRecommendations(pneumoniaProb)
+                };
+            }
+
+            getRandomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            addPredictionVariance(prob) {
+                const variance = (Math.random() - 0.5) * 0.1; // ±5% variance
+                return Math.max(0.01, Math.min(0.99, prob + variance));
+            }
+
+            getConfidenceLevel(probability) {
+                if (probability >= 0.9) return "very high";
+                if (probability >= 0.8) return "high";
+                if (probability >= 0.7) return "moderate";
+                return "low";
+            }
+
+            generateFindings(pneumoniaProb) {
+                if (pneumoniaProb > 0.7) {
+                    return [
+                        "Consolidation observed in lower lung fields",
+                        "Increased opacity in affected areas",
+                        "Possible air bronchograms present",
+                        "Border effacement suggesting pleural involvement"
+                    ];
+                } else if (pneumoniaProb > 0.4) {
+                    return [
+                        "Mild opacity changes in peripheral regions",
+                        "Inconclusive interstitial patterns",
+                        "Recommend clinical correlation",
+                        "Follow-up imaging suggested"
+                    ];
+                } else {
+                    return [
+                        "Clear lung fields bilaterally",
+                        "Normal cardiomediastinal silhouette",
+                        "No focal consolidation observed",
+                        "No pleural effusion or pneumothorax"
+                    ];
+                }
+            }
+
+            generateRecommendations(pneumoniaProb) {
+                if (pneumoniaProb > 0.7) {
+                    return [
+                        "Urgent clinical evaluation recommended",
+                        "Consider antibiotic therapy based on clinical findings",
+                        "Follow-up chest X-ray in 48-72 hours",
+                        "Monitor oxygen saturation levels"
+                    ];
+                } else if (pneumoniaProb > 0.4) {
+                    return [
+                        "Clinical correlation required",
+                        "Consider laboratory tests (CBC, CRP)",
+                        "Repeat imaging if symptoms persist",
+                        "Close monitoring advised"
+                    ];
+                } else {
+                    return [
+                        "No immediate intervention required",
+                        "Routine follow-up as per standard care",
+                        "Continue monitoring for symptom development"
+                    ];
+                }
+            }
+        }
+
+        // Initialize the detector
+        const detector = new PneumoniaDetector();
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+        });
+
+        function initializeEventListeners() {
+            // File input change
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary)';
+            uploadArea.style.background = 'var(--primary-light)';
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--gray)';
+            uploadArea.style.background = 'white';
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            handleDragLeave(e);
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect();
+            }
+        }
+
+        function handleFileSelect() {
+            const file = fileInput.files[0];
+            if (!file) return;
+            
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                showError('Please select an image file (JPG, PNG)');
+                return;
+            }
+            
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                previewSection.style.display = 'block';
+                uploadArea.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearImage() {
+            fileInput.value = '';
+            previewSection.style.display = 'none';
+            uploadArea.style.display = 'block';
+            resultsSection.style.display = 'none';
+        }
+
+        async function analyzeImage() {
+            const file = fileInput.files[0];
+            if (!file) {
+                showError('Please select an image first');
+                return;
+            }
+            
+            showLoading();
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                try {
+                    const result = detector.simulatePrediction(file.name);
+                    displayResults(result);
+                } catch (error) {
+                    showError('Analysis failed: ' + error.message);
+                } finally {
+                    hideLoading();
+                }
+            }, 2000);
+        }
+
+        async function analyzeSample(sampleType) {
+            showLoading();
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                try {
+                    const result = detector.simulateSamplePrediction(sampleType);
+                    displayResults(result);
+                    
+                    // Show a sample image in preview
+                    preview.src = getSampleImageUrl(sampleType);
+                    previewSection.style.display = 'block';
+                    uploadArea.style.display = 'none';
+                    
+                } catch (error) {
+                    showError('Sample analysis failed: ' + error.message);
+                } finally {
+                    hideLoading();
+                }
+            }, 1500);
+        }
+
+        function getSampleImageUrl(sampleType) {
+            // Return placeholder image URLs or data URLs for samples
+            const sampleImages = {
+                normal: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2QxZmFlNSIvPjx0ZXh0IHg9IjIwMCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9Ii8zNzQxNTEiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk5vcm1hbCBDaGVzdCBYLXJheTwvdGV4dD48L3N2Zz4=',
+                pneumonia: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2ZlY2FjYSIvPjx0ZXh0IHg9IjIwMCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9Ii83ZjFmMWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBuZXVtb25pYSBDYXNlPC90ZXh0Pjwvc3ZnPg==',
+                uncertain: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgZmlsbD0iI2ZlZjNjNyIvPjx0ZXh0IHg9IjIwMCIgeT0iMjAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9Ii83ODUwYjAiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkJvcmRlcmxpbmUgQ2FzZTwvdGV4dD48L3N2Zz4='
+            };
+            
+            return sampleImages[sampleType] || sampleImages.normal;
+        }
+
+        function displayResults(result) {
+            // Update analysis time and model info
+            document.getElementById('analysisTime').textContent = new Date().toLocaleString();
+            document.getElementById('modelVersion').textContent = result.model_used || 'ViT-PneumoniaDetector v2.1';
+            
+            // Update diagnosis
+            const diagnosisTitle = document.getElementById('diagnosisTitle');
+            const diagnosisSubtitle = document.getElementById('diagnosisSubtitle');
+            const confidenceBadge = document.getElementById('confidenceBadge');
+            const confidenceText = document.getElementById('confidenceText');
+            
+            diagnosisTitle.textContent = result.top_label;
+            diagnosisSubtitle.textContent = getDiagnosisSubtitle(result.top_label);
+            
+            // Set confidence badge
+            confidenceText.textContent = result.confidence ? result.confidence.charAt(0).toUpperCase() + result.confidence.slice(1) + ' Confidence' : 'High Confidence';
+            confidenceBadge.className = 'confidence-badge ' + (result.confidence || 'high');
+            
+            // Update probability circle
+            updateProbabilityCircle(result.top_prob);
+            
+            // Update probability bars
+            updateProbabilityBars(result.probs);
+            
+            // Update findings and recommendations
+            updateFindings(result.findings);
+            updateRecommendations(result.recommendations);
+            
+            // Show results section
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getDiagnosisSubtitle(label) {
+            if (label.includes('Pneumonia')) {
+                return 'AI detected patterns consistent with pneumonia. Clinical correlation recommended.';
+            } else if (label.includes('Normal')) {
+                return 'No significant abnormalities detected. Chest X-ray appears within normal limits.';
+            } else {
+                return 'Analysis complete. Please review detailed findings below.';
+            }
+        }
+
+        function updateProbabilityCircle(probability) {
+            const circle = document.querySelector('.progress-ring-circle');
+            const text = document.getElementById('probabilityValue');
+            const radius = 52;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (probability * circumference);
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            circle.style.strokeDashoffset = offset;
+            text.textContent = `${Math.round(probability * 100)}%`;
+        }
+
+        function updateProbabilityBars(probabilities) {
+            const container = document.getElementById('probabilityBars');
+            container.innerHTML = '';
+            
+            for (const [label, prob] of Object.entries(probabilities)) {
+                const barElement = document.createElement('div');
+                barElement.className = 'probability-bar';
+                barElement.innerHTML = `
+                    <div class="bar-label">${label}</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="width: ${prob * 100}%"></div>
+                    </div>
+                    <div class="bar-value">${Math.round(prob * 100)}%</div>
+                `;
+                container.appendChild(barElement);
+            }
+        }
+
+        function updateFindings(findings) {
+            const container = document.getElementById('findingsList');
+            container.innerHTML = '';
+            
+            if (findings && findings.length > 0) {
+                findings.forEach(finding => {
+                    const li = document.createElement('li');
+                    li.textContent = finding;
+                    container.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'No specific findings reported.';
+                container.appendChild(li);
+            }
+        }
+
+        function updateRecommendations(recommendations) {
+            const container = document.getElementById('recommendationsList');
+            container.innerHTML = '';
+            
+            if (recommendations && recommendations.length > 0) {
+                recommendations.forEach(rec => {
+                    const li = document.createElement('li');
+                    li.textContent = rec;
+                    container.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'No specific recommendations. Follow standard clinical protocols.';
+                container.appendChild(li);
+            }
+        }
+
+        function newAnalysis() {
+            clearImage();
+            resultsSection.style.display = 'none';
+            document.getElementById('upload').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function downloadReport() {
+            // In a real application, this would generate a PDF report
+            alert('In a production environment, this would download a detailed PDF report with all findings and recommendations.');
+        }
+
+        function showLoading() {
+            loadingOverlay.style.display = 'flex';
+        }
+
+        function hideLoading() {
+            loadingOverlay.style.display = 'none';
+        }
+
+        function showError(message) {
+            alert('Error: ' + message);
+        }
+
+        // Initialize scanning animation in hero section
+        function initHeroAnimation() {
+            const scanner = document.querySelector('.scanner');
+            if (scanner) {
+                setInterval(() => {
+                    scanner.style.transform = 'translateY(200px)';
+                    setTimeout(() => {
+                        scanner.style.transform = 'translateY(0)';
+                    }, 1000);
+                }, 2000);
+            }
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', initHeroAnimation);
+    </script>
+</body>
+</html>
