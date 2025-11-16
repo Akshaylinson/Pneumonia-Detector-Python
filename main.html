@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Pneumonia Detector (VIT)</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 22px; }
+    img { max-width: 420px; border: 4px solid #eee; display:block; margin: 10px 0; }
+    #result { margin-top: 12px; font-weight: bold; color: #222; }
+    #error { color: #b00; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Pneumonia Detector (VIT)</h1>
+
+  <p>Choose a chest X-ray image (jpg/png) and click <strong>Upload & Predict</strong>.</p>
+
+  <form id="uploadForm" enctype="multipart/form-data" method="post">
+    <input type="file" id="fileInput" name="file" accept="image/*" required />
+    <div>
+      <img id="preview" alt="Preview" style="display:none" />
+    </div>
+    <button type="submit">Upload & Predict</button>
+  </form>
+
+  <div id="result"></div>
+  <div id="error"></div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const result = document.getElementById('result');
+    const error = document.getElementById('error');
+
+    // preview image when chosen
+    fileInput.addEventListener('change', () => {
+      const f = fileInput.files[0];
+      if (!f) { preview.style.display='none'; return; }
+      preview.src = URL.createObjectURL(f);
+      preview.style.display = 'block';
+    });
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      error.textContent = '';
+      result.textContent = 'Uploading and running inference…';
+
+      // build multipart form data
+      const fd = new FormData();
+      const f = fileInput.files[0];
+      if (!f) {
+        error.textContent = 'Please select a file first';
+        result.textContent = '';
+        return;
+      }
+      fd.append('file', f);
+
+      try {
+        // send POST multipart/form-data
+        const resp = await fetch('/predict', {
+          method: 'POST',
+          body: fd
+        });
+
+        if (!resp.ok) {
+          const txt = await resp.text();
+          throw new Error(`Server returned ${resp.status}: ${txt}`);
+        }
+
+        const data = await resp.json();
+        // show friendly result
+        result.innerHTML = `
+          <div>Top label: <strong>${data.top_label}</strong> (prob ${Number(data.top_prob).toFixed(3)})</div>
+          <div>Full probs: ${JSON.stringify(data.probs)}</div>
+        `;
+      } catch (err) {
+        error.textContent = 'Error: ' + err.message;
+        result.textContent = '';
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
